@@ -12,7 +12,7 @@ export default class UserLotto extends Lotto {
 		return this.#bonus;
 	}
 
-	static createLotto(numbers, bonus) {
+	static create(numbers, bonus) {
 		return new UserLotto(numbers, bonus);
 	}
 }

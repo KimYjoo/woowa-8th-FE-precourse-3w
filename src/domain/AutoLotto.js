@@ -55,12 +55,11 @@ export default class AutoLotto extends Lotto {
 		}
 	}
 
-	static createLotto() {
-		const drawedLotteryNumbers = pickSortedUniqueRandomNumber(1, 45, 6);
-		return new AutoLotto(drawedLotteryNumbers);
+	static create() {
+		return new AutoLotto(pickSortedUniqueRandomNumber(1, 45, 6));
 	}
 
-	static buyLotto(buyCount) {
-		return Array.from({ length: buyCount }, () => this.createLotto());
+	static generateLottos(buyCount) {
+		return Array.from({ length: buyCount }, () => this.create());
 	}
 }
