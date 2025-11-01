@@ -46,7 +46,19 @@ export default class LottoGame {
 		}, []);
 	}
 
-	getLottoResult() {}
+	getLottoResult(results) {
+		const winByGrade = [0, 5000, 50000, 1500000, 30000000, 2000000000];
+		const gameResult = results.reduce((acc, curr) => {
+			acc += winByGrade[curr];
+			return acc;
+		}, 0);
+		const ratio = ((gameResult / this.#getPurchasePrise()) * 100).toFixed(2);
+		return ratio;
+	}
+
+	#getPurchasePrise() {
+		return this.#autoLottos.length * 1000;
+	}
 
 	static generateLottoGame() {
 		return new LottoGame();
