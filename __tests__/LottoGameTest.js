@@ -1,6 +1,7 @@
 import { MissionUtils } from "@woowacourse/mission-utils";
 import AutoLotto from "../src/domain/AutoLotto.js";
 import UserLotto from "../src/domain/UserLotto.js";
+import LottoGame from "../src/application/lottoGame.js";
 
 const mockDrawLottoNumber = (numbers) => {
 	MissionUtils.Random.pickUniqueNumbersInRange = jest.fn();
@@ -11,7 +12,7 @@ const mockDrawLottoNumber = (numbers) => {
 
 const mockLottoNumbers = [
 	[1, 2, 3, 4, 5, 10],
-	[6, 7, 8, 9, 11, 12],
+	[1, 2, 3, 5, 11, 12],
 	[13, 14, 15, 16, 17, 18],
 	[19, 24, 25, 26, 27, 28],
 	[33, 34, 35, 36, 37, 38],
@@ -44,7 +45,7 @@ test("발행된 로또와 사용자의 추첨 번호를 비교해서 일치하�
 	const autoLotto = AutoLotto.create();
 	const userLotto = UserLotto.create([1, 2, 3, 11, 12, 13], 7);
 
-	const { matchedCount, _ } = autoLotto.compareLotto(userLotto);
+	const matchedCount = autoLotto.compareLotto(userLotto.numbers);
 	expect(matchedCount).toBe(3);
 });
 
@@ -53,22 +54,17 @@ test("발행된 로또에서 보너스 번호의 일치 여부를 확인한다."
 	const autoLotto = AutoLotto.create();
 	const userLotto = UserLotto.create([1, 2, 3, 11, 12, 13], 5);
 
-	const { bonusMatched, _ } = autoLotto.compareLotto(userLotto);
+	const bonusMatched = autoLotto.compareBonus(userLotto.bonus);
 	expect(bonusMatched).toBe(true);
 });
 
-test("발행된 로또의 당첨 등수를 확인한다.", () => {
-	jest.spyOn(MissionUtils.Random, "pickUniqueNumbersInRange").mockReturnValue([1, 2, 3, 4, 5, 10]);
-	const autoLotto = AutoLotto.create();
-	const userLotto1 = UserLotto.create([1, 2, 3, 11, 12, 13], 5);
-	autoLotto.compareLotto(userLotto1);
-	const rank1 = autoLotto.rankingLotto();
-	// 5등, 3개 일치
-	expect(rank1).toBe(1);
-
-	const userLotto2 = UserLotto.create([1, 2, 3, 4, 10, 13], 5);
-	autoLotto.compareLotto(userLotto2);
-	const rank2 = autoLotto.rankingLotto();
-	// 2등, 5개 일치 + 보너스 번호 일치
-	expect(rank2).toBe(4);
+test("사용자가 구입한 모든 로또의 결과를 확인한다.", () => {
+	const lottoGame = LottoGame.generateLottoGame();
+	const count = 2;
+	const numbers = [1, 2, 3, 11, 12, 13];
+	const bonus = 5;
+	mockDrawLottoNumber(mockLottoNumbers);
+	lottoGame.buyLotto({ count, numbers, bonus });
+	const allLottoRank = lottoGame.getResultAllAutoLottos();
+	expect(allLottoRank).toEqual([1, 4]);
 });
