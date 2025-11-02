@@ -1,7 +1,7 @@
 import { inputPayCash, inputBonusNumber, inputLotteryNumbers } from "../view/inputView.js";
 import { printNumberOfPurchases, printPayedAutoLottos, printAutoLottosRank, printWinningRatio } from "../view/outputView.js";
 import { calculatePayAmount, splitStringToNumberList, parseNumber } from "../utils/utils.js";
-import LottoGame from "../domain/LottoGame.js";
+import LottoGame from "../lottoGame/LottoGame.js";
 
 class App {
 	#lottoGame;
@@ -17,7 +17,7 @@ class App {
 		this.#lottoGame.enterUserLottoInformation(userNumbers, bonusNumber);
 		this.#lottoGame.calculateResultOfLottos();
 
-		this.#printResults(payAmount);
+		this.#printResults();
 	}
 
 	async #handlePurchaseCashInput() {
@@ -32,11 +32,11 @@ class App {
 		const bonusNumber = await inputBonusNumber();
 		return parseNumber(bonusNumber);
 	}
-	async #printResults(payAmount) {
-		printNumberOfPurchases(payAmount);
+	async #printResults() {
+		printWinningRatio(this.#lottoGame.resultProfitRatio);
+		printNumberOfPurchases(this.#lottoGame.purchaseAmount);
 		printPayedAutoLottos(this.#lottoGame.getPurchaseLottoNumbers());
 		printAutoLottosRank(this.#lottoGame.resultRankCounts);
-		printWinningRatio(this.#lottoGame.resultProfitRatio);
 	}
 }
 
