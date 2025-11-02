@@ -1,5 +1,6 @@
 import Lotto from "./Lotto.js";
-
+import { ErrorMessage } from "../../constants/message/Error.js";
+import { LottoNumberLimit } from "../../constants/GameSetting.js";
 export default class UserLotto extends Lotto {
     #bonus;
 
@@ -14,8 +15,8 @@ export default class UserLotto extends Lotto {
     }
 
     #validate(bonus) {
-        if (bonus < 1 || bonus > 45) throw new Error("[ERROR] 보너스 번호가 1에서 45 사이의 숫자여야 합니다.");
-        if (this.numbers.includes(bonus)) throw new Error("[ERROR] 보너스 번호가 중복된 숫자입니다.");
+        if (bonus < LottoNumberLimit.START || bonus > LottoNumberLimit.END) throw new Error(ErrorMessage.ERROR_RULE_BONUS_RANGE);
+        if (this.numbers.includes(bonus)) throw new Error(ErrorMessage.ERROR_RULE_BONUS_DUPLICATION);
     }
 
     static createWithInformation(numbers, bonus) {

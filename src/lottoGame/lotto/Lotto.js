@@ -1,4 +1,5 @@
-import { Console } from "@woowacourse/mission-utils";
+import { ErrorMessage } from "../../constants/message/Error.js";
+import { LottoNumberLimit } from "../../constants/GameSetting.js";
 
 class Lotto {
     #numbers;
@@ -13,14 +14,14 @@ class Lotto {
     }
 
     #validate(numbers) {
-        if (numbers.length !== 6) {
-            throw new Error("[ERROR] 로또 번호는 6개여야 합니다.");
+        if (numbers.length !== LottoNumberLimit.AMOUNT) {
+            throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_AMOUNT);
         }
-        const isNumberInvalid = numbers.some((value) => value < 1 || value > 45);
-        if (isNumberInvalid) throw new Error("[ERROR] 로또 번호가 1에서 45 사이의 숫자여야 합니다.");
+        const isNumberInvalid = numbers.some((value) => value < LottoNumberLimit.START || value > LottoNumberLimit.END);
+        if (isNumberInvalid) throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_RANGE);
         const numberSet = new Set(numbers);
         if (numbers.length !== numberSet.size) {
-            throw new Error("[ERROR] 중복된 숫자가 있습니다.");
+            throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_DUPLICATION);
         }
     }
 }

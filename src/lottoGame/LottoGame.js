@@ -1,52 +1,53 @@
 import AutoLotto from "./lotto/AutoLotto.js";
 import UserLotto from "./lotto/UserLotto.js";
 import * as GameUtils from "./GameUtils.js";
+import { LottoNumberLimit } from "../constants/GameSetting.js";
 
 export default class LottoGame {
-	#purchaseAmount;
-	#autoLottos;
-	#userLotto;
-	#resultRankCounts;
-	#resultProfitRatio;
+    #purchaseAmount;
+    #autoLottos;
+    #userLotto;
+    #resultRankCounts;
+    #resultProfitRatio;
 
-	constructor() {
-		this.#resultRankCounts = [0, 0, 0, 0, 0, 0];
-		this.#resultProfitRatio = 0;
-	}
+    constructor() {
+        this.#resultRankCounts = Array.from({ length: LottoNumberLimit.AMOUNT }, () => 0);
+        this.#resultProfitRatio = 0;
+    }
 
-	get purchaseAmount() {
-		return this.#purchaseAmount;
-	}
+    get purchaseAmount() {
+        return this.#purchaseAmount;
+    }
 
-	get resultRankCounts() {
-		return this.#resultRankCounts;
-	}
+    get resultRankCounts() {
+        return this.#resultRankCounts;
+    }
 
-	get resultProfitRatio() {
-		return this.#resultProfitRatio;
-	}
+    get resultProfitRatio() {
+        return this.#resultProfitRatio;
+    }
 
-	getPurchaseLottoNumbers() {
-		return this.#autoLottos.map((value) => value.numbers);
-	}
+    getPurchaseLottoNumbers() {
+        return this.#autoLottos.map((value) => value.numbers);
+    }
 
-	// 구입 로또 생성
-	drawAmountOfLottos(amount) {
-		this.#purchaseAmount = amount;
-		this.#autoLottos = AutoLotto.drawMultiple(amount);
-	}
-	// 사용자 로또 정보 입력
-	enterUserLottoInformation(numbers, bonus) {
-		this.#userLotto = UserLotto.createWithInformation(numbers, bonus);
-	}
-	// 로또 결과 산출
-	// 로또 결과 산출 메서드 간 시간적 결합
-	calculateResultOfLottos() {
-		this.#resultRankCounts = GameUtils.calculateLottosStatistics(this.#autoLottos, this.#userLotto);
-		this.#resultProfitRatio = GameUtils.calculateProfitRatio(this.#resultRankCounts, this.#purchaseAmount);
-	}
+    // 구입 로또 생성
+    drawAmountOfLottos(amount) {
+        this.#purchaseAmount = amount;
+        this.#autoLottos = AutoLotto.drawMultiple(amount);
+    }
+    // 사용자 로또 정보 입력
+    enterUserLottoInformation(numbers, bonus) {
+        this.#userLotto = UserLotto.createWithInformation(numbers, bonus);
+    }
+    // 로또 결과 산출
+    // 로또 결과 산출 메서드 간 시간적 결합
+    calculateResultOfLottos() {
+        this.#resultRankCounts = GameUtils.calculateLottosStatistics(this.#autoLottos, this.#userLotto);
+        this.#resultProfitRatio = GameUtils.calculateProfitRatio(this.#resultRankCounts, this.#purchaseAmount);
+    }
 
-	static generateLottoGame() {
-		return new LottoGame();
-	}
+    static generateLottoGame() {
+        return new LottoGame();
+    }
 }
