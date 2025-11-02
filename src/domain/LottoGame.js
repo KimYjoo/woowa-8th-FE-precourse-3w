@@ -1,4 +1,4 @@
-import AutoLotto from "../domain/AutoLotto.js";
+import AutoLotto from "./lotto/AutoLotto.js";
 import UserLotto from "../domain/UserLotto.js";
 
 export default class LottoGame {

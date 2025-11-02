@@ -1,4 +1,4 @@
-import Lotto from "./Lotto.js";
+import Lotto from "./lotto/Lotto.js";
 
 export default class UserLotto extends Lotto {
 	#bonus;

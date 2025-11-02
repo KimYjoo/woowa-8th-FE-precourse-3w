@@ -1,7 +1,7 @@
 import { inputPayCash, inputBonusNumber, inputLotteryNumbers } from "../view/inputView.js";
 import { printNumberOfPurchases, printPayedAutoLottos, printAutoLottosRank, printWinningRatio } from "../view/outputView.js";
 import { calculatePayAmount, splitStringToNumberList, parseNumber } from "../utils/utils.js";
-import LottoGame from "./lottoGame.js";
+import LottoGame from "../domain/LottoGame.js";
 
 class App {
 	#lottoGame;
