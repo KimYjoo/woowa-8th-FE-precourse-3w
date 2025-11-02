@@ -12,8 +12,12 @@ function calculatePayAmount(payPrice) {
 	return Math.floor(payPrice / 1000);
 }
 
-function splitString(input) {
-	return input.split(",").map((v) => v.trim());
+function splitStringToNumberList(input) {
+	return input.split(",").map((v) => Number(v.trim()));
 }
 
-export { pickSortedUniqueRandomNumber, hasValueInArray };
+function parseNumber(string) {
+	return Number(string);
+}
+
+export { pickSortedUniqueRandomNumber, hasValueInArray, calculatePayAmount, splitStringToNumberList, parseNumber };
