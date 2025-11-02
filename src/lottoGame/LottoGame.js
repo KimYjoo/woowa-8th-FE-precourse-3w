@@ -33,11 +33,11 @@ export default class LottoGame {
 	// 구입 로또 생성
 	drawAmountOfLottos(amount) {
 		this.#purchaseAmount = amount;
-		this.#autoLottos = AutoLotto.generateLottos(amount);
+		this.#autoLottos = AutoLotto.drawMultiple(amount);
 	}
 	// 사용자 로또 정보 입력
 	enterUserLottoInformation(numbers, bonus) {
-		this.#userLotto = UserLotto.create(numbers, bonus);
+		this.#userLotto = UserLotto.createWithInformation(numbers, bonus);
 	}
 	// 로또 결과 산출
 	// 로또 결과 산출 메서드 간 시간적 결합

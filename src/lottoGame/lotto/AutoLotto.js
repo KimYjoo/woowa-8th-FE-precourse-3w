@@ -17,11 +17,11 @@ export default class AutoLotto extends Lotto {
 		return hasValueInArray(this.numbers, bonus);
 	}
 
-	static create() {
+	static drawSingle() {
 		return new AutoLotto(pickSortedUniqueRandomNumber(1, 45, 6));
 	}
 
-	static generateLottos(count) {
-		return Array.from({ length: count }, () => this.create());
+	static drawMultiple(count) {
+		return Array.from({ length: count }, () => this.drawSingle());
 	}
 }

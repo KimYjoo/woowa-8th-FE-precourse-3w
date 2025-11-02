@@ -20,7 +20,7 @@ const mockLottoNumbers = [
 
 test("1에서 45사이의 중복이 없는 6자리의 난수로 이루어진 로또가 발행된다.", () => {
 	jest.spyOn(MissionUtils.Random, "pickUniqueNumbersInRange").mockReturnValue([1, 2, 3, 4, 5, 10]);
-	const lotto = AutoLotto.create();
+	const lotto = AutoLotto.drawSingle();
 
 	expect(MissionUtils.Random.pickUniqueNumbersInRange).toHaveBeenCalledWith(1, 45, 6);
 
@@ -30,7 +30,7 @@ test("1에서 45사이의 중복이 없는 6자리의 난수로 이루어진 로
 test("사용자가 5개의 로또를 구입했을때 5개의 로또가 발행된다.", () => {
 	mockDrawLottoNumber(mockLottoNumbers);
 	const buyCount = 5;
-	const tickets = AutoLotto.generateLottos(buyCount);
+	const tickets = AutoLotto.drawMultiple(buyCount);
 
 	expect(tickets.length).toBe(buyCount);
 
@@ -42,8 +42,8 @@ test("사용자가 5개의 로또를 구입했을때 5개의 로또가 발행된
 
 test("발행된 로또와 사용자의 추첨 번호를 비교해서 일치하는 숫자의 개수를 구한다.", () => {
 	jest.spyOn(MissionUtils.Random, "pickUniqueNumbersInRange").mockReturnValue([1, 2, 3, 4, 5, 10]);
-	const autoLotto = AutoLotto.create();
-	const userLotto = UserLotto.create([1, 2, 3, 11, 12, 13], 7);
+	const autoLotto = AutoLotto.drawSingle();
+	const userLotto = UserLotto.createWithInformation([1, 2, 3, 11, 12, 13], 7);
 
 	const matchedCount = autoLotto.compareLotto(userLotto.numbers);
 	expect(matchedCount).toBe(3);
@@ -51,8 +51,8 @@ test("발행된 로또와 사용자의 추첨 번호를 비교해서 일치하�
 
 test("발행된 로또에서 보너스 번호의 일치 여부를 확인한다.", () => {
 	jest.spyOn(MissionUtils.Random, "pickUniqueNumbersInRange").mockReturnValue([1, 2, 3, 4, 5, 10]);
-	const autoLotto = AutoLotto.create();
-	const userLotto = UserLotto.create([1, 2, 3, 11, 12, 13], 5);
+	const autoLotto = AutoLotto.drawSingle();
+	const userLotto = UserLotto.createWithInformation([1, 2, 3, 11, 12, 13], 5);
 
 	const bonusMatched = autoLotto.compareBonus(userLotto.bonus);
 	expect(bonusMatched).toBe(true);
