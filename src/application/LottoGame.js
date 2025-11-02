@@ -54,21 +54,30 @@ export default class LottoGame {
 		}
 		return 0;
 	}
+	// 로또 결과 산출
+	// 로또 결과 산출 메서드 간 시간적 결합
+	calculateResultOfLottos() {
+		this.#calculateStatistics();
+		this.#calculateProfitRatio();
+	}
 	// 구입한 모든 로또 결과 도출
-	calculateStatistics() {
-		this.#autoLottos.reduce((acc, autoLotto) => {
-			const { matchedCount, isBonusMatched } = this.#getResultSingleAutoLotto(autoLotto);
-			const singleLottoRank = this.#getLottoRank({ matchedCount, isBonusMatched });
-			acc[singleLottoRank]++;
-			return acc;
-		}, this.#resultRankCounts);
+	#calculateStatistics() {
+		this.#resultRankCounts = this.#autoLottos.reduce(
+			(acc, autoLotto) => {
+				const { matchedCount, isBonusMatched } = this.#getResultSingleAutoLotto(autoLotto);
+				const singleLottoRank = this.#getLottoRank({ matchedCount, isBonusMatched });
+				acc[singleLottoRank]++;
+				return acc;
+			},
+			[0, 0, 0, 0, 0, 0]
+		);
 	}
 
 	#getPurchasePrise() {
 		return this.#autoLottos.length * 1000;
 	}
 	// 구입한 금액 대비 수익률 계산
-	calculateProfitRatio() {
+	#calculateProfitRatio() {
 		const winByGrade = [0, 5000, 50000, 1500000, 30000000, 2000000000];
 		const gameResult = this.#resultRankCounts.reduce((acc, curr, index) => {
 			acc += winByGrade[index] * curr;

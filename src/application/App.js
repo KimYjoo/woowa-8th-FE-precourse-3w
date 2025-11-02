@@ -15,13 +15,9 @@ class App {
 
 		this.#lottoGame.drawAmountOfLottos(payAmount);
 		this.#lottoGame.enterUserLottoInformation(userNumbers, bonusNumber);
-		this.#lottoGame.calculateStatistics();
-		this.#lottoGame.calculateProfitRatio();
+		this.#lottoGame.calculateResultOfLottos();
 
-		printNumberOfPurchases(payAmount);
-		printPayedAutoLottos(this.#lottoGame.getPurchaseLottoNumbers());
-		printAutoLottosRank(this.#lottoGame.resultRankCounts);
-		printWinningRatio(this.#lottoGame.resultProfitRatio);
+		this.#printResults(payAmount);
 	}
 
 	async #handlePurchaseCashInput() {
@@ -35,6 +31,12 @@ class App {
 	async #handleBonusNumberInput() {
 		const bonusNumber = await inputBonusNumber();
 		return parseNumber(bonusNumber);
+	}
+	async #printResults(payAmount) {
+		printNumberOfPurchases(payAmount);
+		printPayedAutoLottos(this.#lottoGame.getPurchaseLottoNumbers());
+		printAutoLottosRank(this.#lottoGame.resultRankCounts);
+		printWinningRatio(this.#lottoGame.resultProfitRatio);
 	}
 }
 
