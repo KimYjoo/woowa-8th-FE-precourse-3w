@@ -1,3 +1,6 @@
+import { validateNoneInput, validatePriceInput, validateNumbersInput, validateBonusInput } from "../src/application/InputValidator";
+import { MissionUtils } from "@woowacourse/mission-utils";
+
 const getLogSpy = () => {
 	const logSpy = jest.spyOn(MissionUtils.Console, "print");
 	logSpy.mockClear();
@@ -5,9 +8,7 @@ const getLogSpy = () => {
 };
 
 const runException = (input, validateInput) => {
-	const logSpy = getLogSpy();
-	validateInput(input);
-	expect(logSpy).toHaveBeenCalledWith(expect.stringContaining("[ERROR]"));
+	expect(() => validateInput(input)).toThrow("[ERROR]");
 };
 
 test("(공통) 입력이 없을 경우", () => {
@@ -33,9 +34,9 @@ describe("당첨 번호 입력 형식 유효성 검사", () => {
 	});
 	test("구분자의 사용이 잘못되었을 경우", () => {
 		const input1 = "1,,2,3,4,5,6";
-		runException(input, validateNumbersInput);
+		runException(input1, validateNumbersInput);
 		const input2 = "1,2,3,4,5,6,";
-		runException(input, validateNumbersInput);
+		runException(input2, validateNumbersInput);
 	});
 });
 
