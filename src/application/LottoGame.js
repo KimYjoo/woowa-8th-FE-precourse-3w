@@ -4,10 +4,28 @@ import UserLotto from "../domain/UserLotto.js";
 export default class LottoGame {
 	#autoLottos;
 	#userLotto;
+	#resultRankCounts;
+	#resultProfitRatio;
 
-	// 로또 구입 프로세스
-	buyLotto({ count, numbers, bonus }) {
-		this.#autoLottos = AutoLotto.generateLottos(count);
+	constructor() {
+		this.#resultRankCounts = [0, 0, 0, 0, 0, 0];
+		this.#resultProfitRatio = 0;
+	}
+
+	get resultRankCounts() {
+		return this.#resultRankCounts;
+	}
+
+	get resultProfitRatio() {
+		return this.#resultProfitRatio;
+	}
+
+	// 구입 로또 생성
+	drawAmountOfLottos(amount) {
+		this.#autoLottos = AutoLotto.generateLottos(amount);
+	}
+	// 사용자 로또 정보 입력
+	enterUserLottoInformation(numbers, bonus) {
 		this.#userLotto = UserLotto.create(numbers, bonus);
 	}
 
@@ -37,27 +55,30 @@ export default class LottoGame {
 		return 0;
 	}
 	// 구입한 모든 로또 결과 도출
-	getResultAllAutoLottos() {
-		return this.#autoLottos.reduce((acc, autoLotto) => {
+	calculateStatistics() {
+		this.#autoLottos.reduce((acc, autoLotto) => {
 			const { matchedCount, isBonusMatched } = this.#getResultSingleAutoLotto(autoLotto);
 			const singleLottoRank = this.#getLottoRank({ matchedCount, isBonusMatched });
-			acc.push(singleLottoRank);
+			acc[singleLottoRank]++;
 			return acc;
-		}, []);
-	}
-
-	getLottoResult(results) {
-		const winByGrade = [0, 5000, 50000, 1500000, 30000000, 2000000000];
-		const gameResult = results.reduce((acc, curr) => {
-			acc += winByGrade[curr];
-			return acc;
-		}, 0);
-		const ratio = ((gameResult / this.#getPurchasePrise()) * 100).toFixed(2);
-		return ratio;
+		}, this.#resultRankCounts);
 	}
 
 	#getPurchasePrise() {
 		return this.#autoLottos.length * 1000;
+	}
+	// 구입한 금액 대비 수익률 계산
+	calculateProfitRatio() {
+		const winByGrade = [0, 5000, 50000, 1500000, 30000000, 2000000000];
+		const gameResult = this.#resultRankCounts.reduce((acc, curr, index) => {
+			acc += winByGrade[index] * curr;
+			return acc;
+		}, 0);
+		this.#resultProfitRatio = Number(((gameResult / this.#getPurchasePrise()) * 100).toFixed(2));
+	}
+
+	getPurchaseLottoNumbers() {
+		return this.#autoLottos.map((value) => value.numbers);
 	}
 
 	static generateLottoGame() {

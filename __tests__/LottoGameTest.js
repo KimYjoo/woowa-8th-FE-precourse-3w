@@ -65,8 +65,8 @@ test("사용자가 구입한 모든 로또의 결과를 확인한다.", () => {
 	const bonus = 5;
 	mockDrawLottoNumber(mockLottoNumbers);
 	lottoGame.buyLotto({ count, numbers, bonus });
-	const allLottoRank = lottoGame.getResultAllAutoLottos();
-	expect(allLottoRank).toEqual([1, 4]);
+	lottoGame.calculateStatistics();
+	expect(lottoGame.resultRankCounts).toEqual([1, 4]);
 });
 
 test("사용자가 구입한 금액에 따른 수익률을 계산한다.", () => {
@@ -75,8 +75,9 @@ test("사용자가 구입한 금액에 따른 수익률을 계산한다.", () =>
 	const numbers = [1, 2, 3, 11, 12, 13];
 	const bonus = 5;
 	mockDrawLottoNumber(mockLottoNumbers);
-	lottoGame.buyLotto({ count, numbers, bonus });
-	const allLottoRank = lottoGame.getResultAllAutoLottos();
-	const rateOfReturn = lottoGame.getLottoResult(allLottoRank);
-	expect(rateOfReturn).toBe((((30000000 + 5000) / 2000) * 100).toFixed(2));
+	lottoGame.drawAmountOfLottos(count);
+	lottoGame.enterUserLottoInformation(numbers, bonus);
+	lottoGame.calculateStatistics();
+	lottoGame.calculateProfitRatio();
+	expect(lottoGame.resultProfitRatio).toBe((((30000000 + 5000) / 2000) * 100).toFixed(2));
 });

@@ -1,4 +1,4 @@
-import Lotto from "./Lotto";
+import Lotto from "./Lotto.js";
 import { hasValueInArray, pickSortedUniqueRandomNumber } from "../utils/utils.js";
 
 export default class AutoLotto extends Lotto {
@@ -21,7 +21,7 @@ export default class AutoLotto extends Lotto {
 		return new AutoLotto(pickSortedUniqueRandomNumber(1, 45, 6));
 	}
 
-	static generateLottos(buyCount) {
-		return Array.from({ length: buyCount }, () => this.create());
+	static generateLottos(count) {
+		return Array.from({ length: count }, () => this.create());
 	}
 }
