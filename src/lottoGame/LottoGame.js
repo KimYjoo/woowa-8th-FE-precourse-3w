@@ -31,7 +31,7 @@ export default class LottoGame {
     getAutoLottoNumbers() {
         return this.#autoLottos.map((value) => value.numbers);
     }
-    gameProcessor({ payAmount, userNumbers, bonusNumber }) {
+    processGame({ payAmount, userNumbers, bonusNumber }) {
         this.#drawAmountOfLottos(payAmount);
         this.#enterUserLottoInformation(userNumbers, bonusNumber);
         this.#calculateResultOfLottos();

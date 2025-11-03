@@ -14,12 +14,11 @@ class App {
         try {
             const validInput = await getValidInputs();
 
-            this.#lottoGame.gameProcessor(validInput);
+            this.#lottoGame.processGame(validInput);
 
             printResults(this.#lottoGame);
         } catch (error) {
             printErrorMessage(error);
-            // throw error;
         }
     }
 }

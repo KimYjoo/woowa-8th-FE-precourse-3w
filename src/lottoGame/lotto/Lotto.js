@@ -1,5 +1,6 @@
 import { ErrorMessage } from "../../constants/message/Error.js";
 import GameConfig from "../../constants/GameConfig.js";
+import { ValidationRuleError } from "../../error/ValidationErrors.js";
 
 class Lotto {
     #numbers;
@@ -15,13 +16,13 @@ class Lotto {
 
     #validate(numbers) {
         if (numbers.length !== GameConfig.AMOUNT_OF_NUMBERS) {
-            throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_AMOUNT);
+            throw new ValidationRuleError(ErrorMessage.ERROR_RULE_NUMBERS_AMOUNT);
         }
         const isNumberInvalid = numbers.some((value) => value < GameConfig.NumberRange.START || value > GameConfig.NumberRange.END);
-        if (isNumberInvalid) throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_RANGE);
+        if (isNumberInvalid) throw new ValidationRuleError(ErrorMessage.ERROR_RULE_NUMBERS_RANGE);
         const numberSet = new Set(numbers);
         if (numbers.length !== numberSet.size) {
-            throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_DUPLICATION);
+            throw new ValidationRuleError(ErrorMessage.ERROR_RULE_NUMBERS_DUPLICATION);
         }
     }
 }

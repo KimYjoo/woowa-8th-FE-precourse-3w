@@ -1,6 +1,8 @@
 import Lotto from "./Lotto.js";
 import { ErrorMessage } from "../../constants/message/Error.js";
 import GameConfig from "../../constants/GameConfig.js";
+import { ValidationRuleError } from "../../error/ValidationErrors.js";
+
 export default class UserLotto extends Lotto {
     #bonus;
 
@@ -15,8 +17,9 @@ export default class UserLotto extends Lotto {
     }
 
     #validate(bonus) {
-        if (bonus < GameConfig.NumberRange.START || bonus > GameConfig.NumberRange.END) throw new Error(ErrorMessage.ERROR_RULE_BONUS_RANGE);
-        if (this.numbers.includes(bonus)) throw new Error(ErrorMessage.ERROR_RULE_BONUS_DUPLICATION);
+        if (bonus < GameConfig.NumberRange.START || bonus > GameConfig.NumberRange.END)
+            throw new ValidationRuleError(ErrorMessage.ERROR_RULE_BONUS_RANGE);
+        if (this.numbers.includes(bonus)) throw new ValidationRuleError(ErrorMessage.ERROR_RULE_BONUS_DUPLICATION);
     }
 
     static createWithInformation(numbers, bonus) {

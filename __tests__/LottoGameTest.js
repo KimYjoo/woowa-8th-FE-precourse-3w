@@ -64,7 +64,7 @@ test("사용자가 구입한 모든 로또의 결과를 확인한다.", () => {
     const userNumbers = [1, 2, 3, 11, 12, 13];
     const bonusNumber = 5;
     mockDrawLottoNumber(mockLottoNumbers);
-    lottoGame.gameProcessor({ payAmount, userNumbers, bonusNumber });
+    lottoGame.processGame({ payAmount, userNumbers, bonusNumber });
     expect(lottoGame.resultRankCounts).toEqual([0, 1, 0, 0, 1, 0]);
 });
 
@@ -74,6 +74,6 @@ test("사용자가 구입한 금액에 따른 수익률을 계산한다.", () =>
     const userNumbers = [1, 2, 3, 11, 12, 13];
     const bonusNumber = 5;
     mockDrawLottoNumber(mockLottoNumbers);
-    lottoGame.gameProcessor({ payAmount, userNumbers, bonusNumber });
+    lottoGame.processGame({ payAmount, userNumbers, bonusNumber });
     expect(lottoGame.resultProfitRatio).toBe(Number((((30000000 + 5000) / 2000) * 100).toFixed(2)));
 });
