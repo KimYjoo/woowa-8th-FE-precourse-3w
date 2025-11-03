@@ -6,9 +6,12 @@ import { printResults } from "./OutputHandler.js";
 class App {
     #lottoGame;
 
+    constructor() {
+        this.#lottoGame = LottoGame.generateLottoGame();
+    }
+
     async run() {
         try {
-            this.#lottoGame = LottoGame.generateLottoGame();
             const { payAmount, userNumbers, bonusNumber } = await getValidInputs();
 
             this.#lottoGame.drawAmountOfLottos(payAmount);
