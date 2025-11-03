@@ -31,19 +31,23 @@ export default class LottoGame {
     getAutoLottoNumbers() {
         return this.#autoLottos.map((value) => value.numbers);
     }
-
+    gameProcessor({ payAmount, userNumbers, bonusNumber }) {
+        this.#drawAmountOfLottos(payAmount);
+        this.#enterUserLottoInformation(userNumbers, bonusNumber);
+        this.#calculateResultOfLottos();
+    }
     // 구입 로또 생성
-    drawAmountOfLottos(amount) {
+    #drawAmountOfLottos(amount) {
         this.#purchaseAmount = amount;
         this.#autoLottos = AutoLotto.drawMultiple(amount);
     }
     // 사용자 로또 정보 입력
-    enterUserLottoInformation(numbers, bonus) {
+    #enterUserLottoInformation(numbers, bonus) {
         this.#userLotto = UserLotto.createWithInformation(numbers, bonus);
     }
     // 로또 결과 산출
     // 로또 결과 산출 메서드 간 시간적 결합
-    calculateResultOfLottos() {
+    #calculateResultOfLottos() {
         this.#resultRankCounts = calculateLottosStatistics(this.#autoLottos, this.#userLotto);
         this.#resultProfitRatio = calculateProfitRatio(this.#resultRankCounts, this.#purchaseAmount);
     }

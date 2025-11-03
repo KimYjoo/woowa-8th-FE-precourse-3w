@@ -12,11 +12,9 @@ class App {
 
     async run() {
         try {
-            const { payAmount, userNumbers, bonusNumber } = await getValidInputs();
+            const validInput = await getValidInputs();
 
-            this.#lottoGame.drawAmountOfLottos(payAmount);
-            this.#lottoGame.enterUserLottoInformation(userNumbers, bonusNumber);
-            this.#lottoGame.calculateResultOfLottos();
+            this.#lottoGame.gameProcessor(validInput);
 
             printResults(this.#lottoGame);
         } catch (error) {
