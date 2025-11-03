@@ -1,7 +1,7 @@
-import { printErrorMessage } from "../view/outputView.js";
-import { getValidInputs } from "./InputHandler.js";
-import LottoGame from "../lottoGame/LottoGame.js";
-import { printResults } from "./OutputHandler.js";
+import { printErrorMessage } from "./view/outputView.js";
+import { getValidInputs } from "./application/InputHandler.js";
+import LottoGame from "./lottoGame/LottoGame.js";
+import { printResults } from "./application/OutputHandler.js";
 
 class App {
     #lottoGame;
