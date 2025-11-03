@@ -28,7 +28,7 @@ export default class LottoGame {
         return this.#resultProfitRatio;
     }
 
-    getPurchaseLottoNumbers() {
+    getAutoLottoNumbers() {
         return this.#autoLottos.map((value) => value.numbers);
     }
 
