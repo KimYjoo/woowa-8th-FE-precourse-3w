@@ -1,6 +1,7 @@
 import AutoLotto from "./lotto/AutoLotto.js";
 import UserLotto from "./lotto/UserLotto.js";
-import * as GameUtils from "./GameUtils.js";
+import calculateProfitRatio from "./gameUtils/CalculateProfitRatio.js";
+import calculateLottosStatistics from "./gameUtils/CalculateLottosStatistics.js";
 import { LottoNumberLimit } from "../constants/GameSetting.js";
 
 export default class LottoGame {
@@ -43,8 +44,8 @@ export default class LottoGame {
     // 로또 결과 산출
     // 로또 결과 산출 메서드 간 시간적 결합
     calculateResultOfLottos() {
-        this.#resultRankCounts = GameUtils.calculateLottosStatistics(this.#autoLottos, this.#userLotto);
-        this.#resultProfitRatio = GameUtils.calculateProfitRatio(this.#resultRankCounts, this.#purchaseAmount);
+        this.#resultRankCounts = calculateLottosStatistics(this.#autoLottos, this.#userLotto);
+        this.#resultProfitRatio = calculateProfitRatio(this.#resultRankCounts, this.#purchaseAmount);
     }
 
     static generateLottoGame() {

@@ -1,22 +1,6 @@
-import { PRICE_UNIT, LottoNumberLimit, PRIZE_BY_RANK, INDEX_BY_RANK, MATCH_COUNT_BY_RANK, DECIMAL_POINT_LIMIT } from "../constants/GameSetting.js";
+import { LottoNumberLimit, INDEX_BY_RANK, MATCH_COUNT_BY_RANK } from "../../constants/GameSetting.js";
 
-export function calculateProfitRatio(rankCounts, purchasePrice) {
-    const profit = calculateProfit(rankCounts);
-    return calculateRatio(profit, purchasePrice);
-}
-
-function calculateProfit(rankCounts) {
-    return rankCounts.reduce((acc, curr, index) => {
-        acc += PRIZE_BY_RANK[index] * curr;
-        return acc;
-    }, 0);
-}
-
-function calculateRatio(winningPrice, purchaseAmount) {
-    return Number(((winningPrice / (purchaseAmount * PRICE_UNIT)) * 100).toFixed(DECIMAL_POINT_LIMIT));
-}
-
-export function calculateLottosStatistics(autoLottos, userLotto) {
+export default function calculateLottosStatistics(autoLottos, userLotto) {
     const rankCounts = Array.from({ length: LottoNumberLimit.AMOUNT }, () => 0);
     autoLottos.forEach((autoLotto) => {
         const { matchedCount, isBonusMatched } = getResultAutoLotto(autoLotto, userLotto.numbers, userLotto.bonus);
