@@ -139,8 +139,8 @@ TDD 방법론을 사용한 뒤에 개발사이클이 정해져 가는 느낌이 
 
 ```
 src
-├── application // 컨트롤러
-│   ├── App.js
+├── App.js // 컨트롤러
+├── application // 컨트롤러 관련 기능
 │   ├── InputHandler.js // 사용자 입력의 처리 과정을 정의
 │   ├── InputValidator.js // 사용자 입력의 형식에 대한 유효성 검사
 │   └── OutputHandler.js // 결과 출력
