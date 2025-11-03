@@ -1,5 +1,5 @@
 import { inputPayCash, inputBonusNumber, inputLotteryNumbers } from "../view/inputView.js";
-import { calculatePayAmount, splitStringToNumberList, parseNumber } from "../utils/utils.js";
+import { calculatePayAmount, splitStringToNumberList, parseNumber } from "../utils/InputProcess.js";
 import { validatePriceInput, validateNumbersInput, validateBonusInput } from "./InputValidator.js";
 import { printErrorMessage } from "../view/outputView.js";
 

@@ -1,5 +1,5 @@
 import Lotto from "./Lotto.js";
-import { hasValueInArray, pickSortedUniqueRandomNumber } from "../../utils/utils.js";
+import { hasValueInArray, pickSortedUniqueRandomNumber } from "../../utils/Common.js";
 import GameConfig from "../../constants/GameConfig.js";
 
 export default class AutoLotto extends Lotto {
