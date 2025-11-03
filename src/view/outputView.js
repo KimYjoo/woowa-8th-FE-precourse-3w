@@ -1,4 +1,5 @@
 import { Console } from "@woowacourse/mission-utils";
+import { REWARD_LIST, OutputMessage } from "../constants/message/Output.js";
 
 function printNumberOfPurchases(numberOfPurchases) {
     Console.print(`${numberOfPurchases}개를 구매했습니다.`);
@@ -6,27 +7,21 @@ function printNumberOfPurchases(numberOfPurchases) {
 
 function printPayedAutoLottos(autoLottoNumberList) {
     autoLottoNumberList.forEach((autoLottoNumbers) => {
-        Console.print(`[${autoLottoNumbers.join(", ")}]`);
+        Console.print(
+            `${OutputMessage.AUTO_LOTTO_PREFIX}${autoLottoNumbers.join(OutputMessage.AUTO_LOTTO_DELIMITER)}${OutputMessage.AUTO_LOTTO_SUFFIX}`
+        );
     });
 }
 
 function printAutoLottosRank(autoLottosResult) {
-    const RewardList = [
-        "",
-        `3개 일치 (5,000원)`,
-        `4개 일치 (50,000원)`,
-        `5개 일치 (1,500,000원)`,
-        `5개 일치, 보너스 볼 일치 (30,000,000원)`,
-        `6개 일치 (2,000,000,000원)`,
-    ];
-    RewardList.forEach((value, index) => {
+    REWARD_LIST.forEach((value, index) => {
         if (index === 0) return;
-        Console.print(`${value} - ${autoLottosResult[index]}개`);
+        Console.print(`${value}${OutputMessage.RANK_MESSAGE_DELIMITER}${autoLottosResult[index]}${OutputMessage.RANK_MESSAGE_SUFFIX}`);
     });
 }
 
 function printWinningRatio(winningRatio) {
-    Console.print(`총 수익률은 ${winningRatio}%입니다.`);
+    Console.print(`${OutputMessage.RATIO_MESSAGE_PREFIX}${winningRatio}${OutputMessage.RATIO_MESSAGE_SUFFIX}`);
 }
 
 function printErrorMessage(error) {
