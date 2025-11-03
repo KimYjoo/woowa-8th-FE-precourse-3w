@@ -1,6 +1,6 @@
 import Lotto from "./Lotto.js";
 import { ErrorMessage } from "../../constants/message/Error.js";
-import { LottoNumberLimit } from "../../constants/GameSetting.js";
+import GameConfig from "../../constants/GameConfig.js";
 export default class UserLotto extends Lotto {
     #bonus;
 
@@ -15,7 +15,7 @@ export default class UserLotto extends Lotto {
     }
 
     #validate(bonus) {
-        if (bonus < LottoNumberLimit.START || bonus > LottoNumberLimit.END) throw new Error(ErrorMessage.ERROR_RULE_BONUS_RANGE);
+        if (bonus < GameConfig.NumberRange.START || bonus > GameConfig.NumberRange.END) throw new Error(ErrorMessage.ERROR_RULE_BONUS_RANGE);
         if (this.numbers.includes(bonus)) throw new Error(ErrorMessage.ERROR_RULE_BONUS_DUPLICATION);
     }
 

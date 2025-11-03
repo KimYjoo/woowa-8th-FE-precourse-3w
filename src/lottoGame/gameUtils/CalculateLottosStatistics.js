@@ -1,7 +1,7 @@
-import { LottoNumberLimit, INDEX_BY_RANK, MATCH_COUNT_BY_RANK } from "../../constants/GameSetting.js";
+import GameConfig from "../../constants/GameConfig.js";
 
 export default function calculateLottosStatistics(autoLottos, userLotto) {
-    const rankCounts = Array.from({ length: LottoNumberLimit.AMOUNT }, () => 0);
+    const rankCounts = Array.from({ length: GameConfig.AMOUNT_OF_NUMBERS }, () => 0);
     autoLottos.forEach((autoLotto) => {
         const { matchedCount, isBonusMatched } = getResultAutoLotto(autoLotto, userLotto.numbers, userLotto.bonus);
         const singleLottoRank = calculateLottoRank({ matchedCount, isBonusMatched });
@@ -15,20 +15,20 @@ function getResultAutoLotto(autoLotto, userNumbers, userBonus) {
     return { matchedCount, isBonusMatched };
 }
 function calculateLottoRank({ matchedCount, isBonusMatched }) {
-    if (matchedCount === MATCH_COUNT_BY_RANK.FIFTH) {
-        return INDEX_BY_RANK.FIFTH;
+    if (matchedCount === GameConfig.RankMatchCount.FIFTH) {
+        return GameConfig.RankIndex.FIFTH;
     }
-    if (matchedCount === MATCH_COUNT_BY_RANK.FOURTH) {
-        return INDEX_BY_RANK.FOURTH;
+    if (matchedCount === GameConfig.RankMatchCount.FOURTH) {
+        return GameConfig.RankIndex.FOURTH;
     }
-    if (matchedCount === MATCH_COUNT_BY_RANK.SECOND && isBonusMatched) {
-        return INDEX_BY_RANK.SECOND;
+    if (matchedCount === GameConfig.RankMatchCount.SECOND && isBonusMatched) {
+        return GameConfig.RankIndex.SECOND;
     }
-    if (matchedCount === MATCH_COUNT_BY_RANK.THIRD) {
-        return INDEX_BY_RANK.THIRD;
+    if (matchedCount === GameConfig.RankMatchCount.THIRD) {
+        return GameConfig.RankIndex.THIRD;
     }
-    if (matchedCount === MATCH_COUNT_BY_RANK.FIRST) {
-        return INDEX_BY_RANK.FIRST;
+    if (matchedCount === GameConfig.RankMatchCount.FIRST) {
+        return GameConfig.RankIndex.FIRST;
     }
-    return INDEX_BY_RANK.BLANK;
+    return GameConfig.RankIndex.BLANK;
 }

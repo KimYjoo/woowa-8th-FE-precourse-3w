@@ -2,7 +2,7 @@ import AutoLotto from "./lotto/AutoLotto.js";
 import UserLotto from "./lotto/UserLotto.js";
 import calculateProfitRatio from "./gameUtils/CalculateProfitRatio.js";
 import calculateLottosStatistics from "./gameUtils/CalculateLottosStatistics.js";
-import { LottoNumberLimit } from "../constants/GameSetting.js";
+import GameConfig from "../constants/GameConfig.js";
 
 export default class LottoGame {
     #purchaseAmount;
@@ -12,7 +12,7 @@ export default class LottoGame {
     #resultProfitRatio;
 
     constructor() {
-        this.#resultRankCounts = Array.from({ length: LottoNumberLimit.AMOUNT }, () => 0);
+        this.#resultRankCounts = Array.from({ length: GameConfig.AMOUNT_OF_NUMBERS }, () => 0);
         this.#resultProfitRatio = 0;
     }
 

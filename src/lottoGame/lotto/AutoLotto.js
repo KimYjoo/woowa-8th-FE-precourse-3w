@@ -1,6 +1,6 @@
 import Lotto from "./Lotto.js";
 import { hasValueInArray, pickSortedUniqueRandomNumber } from "../../utils/utils.js";
-import { LottoNumberLimit } from "../../constants/GameSetting.js";
+import GameConfig from "../../constants/GameConfig.js";
 
 export default class AutoLotto extends Lotto {
     constructor(numbers) {
@@ -16,7 +16,7 @@ export default class AutoLotto extends Lotto {
     }
 
     static drawSingle() {
-        return new AutoLotto(pickSortedUniqueRandomNumber(LottoNumberLimit.START, LottoNumberLimit.END, LottoNumberLimit.AMOUNT));
+        return new AutoLotto(pickSortedUniqueRandomNumber(GameConfig.NumberRange.START, GameConfig.NumberRange.END, GameConfig.AMOUNT_OF_NUMBERS));
     }
 
     static drawMultiple(count) {

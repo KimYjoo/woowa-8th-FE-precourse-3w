@@ -1,6 +1,6 @@
 import { ErrorMessage } from "../constants/message/Error.js";
 import { InputValidationRegex } from "../constants/Reg.js";
-import { PRICE_UNIT } from "../constants/GameSetting.js";
+import GameConfig from "../constants/GameConfig.js";
 
 export function validateNoneInput(input) {
     if (!input) throw new Error(ErrorMessage.ERROR_NONE_INPUT);
@@ -12,7 +12,7 @@ export function validatePriceInput(input) {
     if (!Number.isFinite(numberedInput)) throw new Error(ErrorMessage.ERROR_INPUT_PRICE_NAN);
     if (!Number.isInteger(numberedInput)) throw new Error(ErrorMessage.ERROR_INPUT_PRICE_DECIMAL);
     if (numberedInput <= 0) throw new Error(ErrorMessage.ERROR_INPUT_PRICE_NEGATIVE);
-    if (numberedInput % PRICE_UNIT !== 0) throw new Error(ErrorMessage.ERROR_INPUT_PRICE_UNIT);
+    if (numberedInput % GameConfig.PRICE_UNIT !== 0) throw new Error(ErrorMessage.ERROR_INPUT_PRICE_UNIT);
 }
 
 export function validateNumbersInput(input) {

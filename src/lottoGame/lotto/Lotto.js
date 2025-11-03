@@ -1,5 +1,5 @@
 import { ErrorMessage } from "../../constants/message/Error.js";
-import { LottoNumberLimit } from "../../constants/GameSetting.js";
+import GameConfig from "../../constants/GameConfig.js";
 
 class Lotto {
     #numbers;
@@ -14,10 +14,10 @@ class Lotto {
     }
 
     #validate(numbers) {
-        if (numbers.length !== LottoNumberLimit.AMOUNT) {
+        if (numbers.length !== GameConfig.AMOUNT_OF_NUMBERS) {
             throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_AMOUNT);
         }
-        const isNumberInvalid = numbers.some((value) => value < LottoNumberLimit.START || value > LottoNumberLimit.END);
+        const isNumberInvalid = numbers.some((value) => value < GameConfig.NumberRange.START || value > GameConfig.NumberRange.END);
         if (isNumberInvalid) throw new Error(ErrorMessage.ERROR_RULE_NUMBERS_RANGE);
         const numberSet = new Set(numbers);
         if (numbers.length !== numberSet.size) {

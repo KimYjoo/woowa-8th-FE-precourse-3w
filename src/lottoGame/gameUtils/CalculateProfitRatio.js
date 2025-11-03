@@ -1,4 +1,4 @@
-import { PRICE_UNIT, PRIZE_BY_RANK, DECIMAL_POINT_LIMIT } from "../../constants/GameSetting.js";
+import GameConfig from "../../constants/GameConfig.js";
 
 export default function calculateProfitRatio(rankCounts, purchasePrice) {
     const profit = calculateProfit(rankCounts);
@@ -7,11 +7,11 @@ export default function calculateProfitRatio(rankCounts, purchasePrice) {
 
 function calculateProfit(rankCounts) {
     return rankCounts.reduce((acc, curr, index) => {
-        acc += PRIZE_BY_RANK[index] * curr;
+        acc += GameConfig.PRIZE_BY_RANK[index] * curr;
         return acc;
     }, 0);
 }
 
 function calculateRatio(winningPrice, purchaseAmount) {
-    return Number(((winningPrice / (purchaseAmount * PRICE_UNIT)) * 100).toFixed(DECIMAL_POINT_LIMIT));
+    return Number(((winningPrice / (purchaseAmount * GameConfig.PRICE_UNIT)) * 100).toFixed(GameConfig.DECIMAL_POINT_LIMIT));
 }
